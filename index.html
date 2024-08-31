@@ -5,21 +5,19 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <script src="https://unpkg.com/@tonconnect/ui@0.0.9/dist/tonconnect-ui.min.js"></script>
+<script src="https://unpkg.com/@tonconnect/ui@latest/dist/tonconnect-ui.min.js"></script>
     <title>Connect Telegram Wallet</title>
 
 
 </head>
 <body>
     <h1>Hello World</h1>
-    <div id="da"></div>
+    <div id="ton-connect"></div>
     <script>
-
-            const tonConnectUi = new TON_CONNECT_UI.TON_CONNECT_UI({
-                manifestUrl: 'https://princekaladin.github.io/mymsite/tonconnect-manifest.json',
-                buttonRootId: 'da'
-            })
-
-    </script>    
+        const tonConnectUI = new TON_CONNECT_UI.TonConnectUI({
+            manifestUrl: 'https://princekaladin.github.io/mymsite/',
+            buttonRootId: 'ton-connect'
+        });
+    </script>  
 </body>
 </html>
