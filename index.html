@@ -9,19 +9,18 @@
 
       // Функция для чтения текстового файла
       function loadTextFile() {
-          var filePath = "Build/username.txt"; // путь к файлу
+          var filePath = "username.txt"; // путь к файлу
           fetch(filePath)
               .then(response => response.text())  // Чтение содержимого файла как текста
               .then(data => {
                   // Отправляем данные в Unity
                   unityInstance.SendMessage('GameManager', 'ReceiveUsername', data.trim());
               })
-              .catch(error => console.error('Ошибка загрузки файла:', error));
       }
 
       // Инициализация Unity WebGL и запуск загрузки файла
       window.onload = function() {
-          unityInstance = UnityLoader.instantiate("unityContainer", "Build/YourUnityBuild.json", { onProgress: UnityProgress });
+          unityInstance = UnityLoader.instantiate("unityContainer", "Build/gs.loader.json", { onProgress: UnityProgress });
           loadTextFile();  // Загрузка файла при старте страницы
       };
   </script>
