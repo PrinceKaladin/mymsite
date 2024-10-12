@@ -5,23 +5,7 @@
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
     <title>Unity WebGL Player | flappy</title>
     
-    <script>
-      // Функция для загрузки файла data.txt
-      function loadTextFile() {
-        fetch('data.txt') // Путь к файлу data.txt
-          .then(response => response.text()) // Получаем текст
-          .then(data => {
-            console.log("Loaded text: ", data); // Логируем текст в консоль
-            SendMessage('GameManager', 'ReceiveText', data); // Отправляем данные в Unity
-          })
-          .catch(error => console.error('Error loading text file:', error)); // Ловим ошибки
-      }
-
-      // Эта функция будет вызвана, когда Unity загрузится
-      function onUnityLoaded() {
-        loadTextFile(); // Загрузить текстовый файл после инициализации Unity
-      }
-    </script>
+  
   </head>
   <body style="text-align: center; padding: 0; border: 0; margin: 0;">
     <canvas id="unity-canvas" width=960 height=600 tabindex="-1" style="width: 960px; height: 600px; background: #1F1F20"></canvas>
@@ -56,6 +40,22 @@
         unityInstance.Module.onRuntimeInitialized = onUnityLoaded; // Когда Unity загружается, вызываем функцию onUnityLoaded
       });
     </script>
-    
+      <script>
+      // Функция для загрузки файла data.txt
+      function loadTextFile() {
+        fetch('data.txt') // Путь к файлу data.txt
+          .then(response => response.text()) // Получаем текст
+          .then(data => {
+            console.log("Loaded text: ", data); // Логируем текст в консоль
+            SendMessage('GameManager', 'ReceiveText', data); // Отправляем данные в Unity
+          })
+          .catch(error => console.error('Error loading text file:', error)); // Ловим ошибки
+      }
+
+      // Эта функция будет вызвана, когда Unity загрузится
+      function onUnityLoaded() {
+        loadTextFile(); // Загрузить текстовый файл после инициализации Unity
+      }
+    </script>
   </body>
 </html>
