@@ -12,7 +12,7 @@
           .then(response => response.text()) // Получаем текст
           .then(data => {
             console.log("Loaded text: ", data); // Логируем текст в консоль
-            SendMessage('GameManager', 'ReceiveText', data); // Отправляем данные в Unity
+            SendMessage('GameManager', 'ReceiveUsername', data); // Отправляем данные в Unity
           })
           .catch(error => console.error('Error loading text file:', error)); // Ловим ошибки
       }
