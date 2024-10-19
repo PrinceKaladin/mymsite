@@ -44,7 +44,7 @@
                     if (snapshot.exists()) {
                         const data = snapshot.val();
                         // Send data back to Unity
-                        unityInstance.SendMessage('firebasework', 'OnFirebaseDataReceived', JSON.stringify(data));
+                        unityInstance.SendMessage('y', 'OnFirebaseDataReceived', JSON.stringify(data));
                     } else {
                         console.log('No data available');
                     }
