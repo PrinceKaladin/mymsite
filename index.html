@@ -45,7 +45,7 @@
 
   // Чтение данных из Firebase
   function readDataFromFirebase(path) {
-    database().ref(path).once('value')
+    database.ref(path).once('value')
         .then((snapshot) => {
             const data = snapshot.val();
             // Отправляем данные обратно в Unity через вызов функции OnFirebaseDataReceived
