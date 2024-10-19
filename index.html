@@ -33,7 +33,7 @@
                   if (snapshot.exists()) {
                       const data = snapshot.val();
                       if (unityInstance !== undefined && unityInstance.SendMessage) {
-                          unityInstance.SendMessage('firebasework', 'OnFirebaseDataReceived', JSON.stringify(data));
+                          unityInstance.SendMessage('y', 'OnFirebaseDataReceived', JSON.stringify(data));
                       } else {
                           console.error('Unity is not ready yet');
                       }
