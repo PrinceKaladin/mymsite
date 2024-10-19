@@ -12,7 +12,7 @@
     <script>
       var unityInstance;  // Глобальная переменная unityInstance
 
-      if (true) {
+      if (/iPhone|iPad|iPod|Android/i.test(navigator.userAgent)) {
         var meta = document.createElement('meta');
         meta.name = 'viewport';
         meta.content = 'width=device-width, height=device-height, initial-scale=1.0, user-scalable=no, shrink-to-fit=yes';
@@ -27,22 +27,7 @@
       }
 
       // Функция для чтения данных из Firebase, которая будет вызываться после загрузки Unity
-      function readDataFromFirebase(path) {
-          get(child(ref(database), path))
-              .then((snapshot) => {
-                  if (snapshot.exists()) {
-                      const data = snapshot.val();
-                      if (unityInstance !== undefined && unityInstance.SendMessage) {
-                          unityInstance.SendMessage('y', 'OnFirebaseDataReceived', JSON.stringify(data));
-                      } else {
-                          console.error('Unity is not ready yet');
-                      }
-                  } else {
-                      console.log('No data available');
-                  }
-              })
-              .catch((error) => console.error('Error reading data:', error));
-      }
+     
 
       unityInstance = createUnityInstance(document.querySelector("#unity-canvas"), {
         dataUrl: "Build/gs.data.unityweb",
@@ -61,37 +46,6 @@
       });
     </script>
 
-    <script type="module">
-      import { initializeApp } from 'https://www.gstatic.com/firebasejs/10.14.1/firebase-app.js';
-      import { getDatabase, ref, set, get, child } from 'https://www.gstatic.com/firebasejs/10.14.1/firebase-database.js';
-  
-      const firebaseConfig = {
-          apiKey: "AIzaSyBEuWHhTt7YD-3_vOXlVdu0LzTm4e95rm0",
-          authDomain: "rocketvoy.firebaseapp.com",
-          databaseURL: "https://rocketvoy-default-rtdb.europe-west1.firebasedatabase.app",
-          projectId: "rocketvoy",
-          storageBucket: "rocketvoy.appspot.com",
-          messagingSenderId: "363023542878",
-          appId: "1:363023542878:web:210264407ad5dfe111a2cf",
-          measurementId: "G-SD6ZYT9NQD"
-      };
-  
-      // Initialize Firebase
-      const app = initializeApp(firebaseConfig);
-      const database = getDatabase(app);
-  
-      // Функция для записи данных в Firebase
-      window.writeDataToFirebase = function(path, data) {
-          set(ref(database, path), JSON.parse(data))
-              .then(() => console.log('Data written successfully'))
-              .catch((error) => console.error('Error writing data:', error));
-      };
-  
-      // Функция для чтения данных из Firebase
-      window.readDataFromFirebase = function(path) {
-          // Эта функция будет вызвана после загрузки Unity
-          console.log('Attempting to read data from Firebase...');
-      };
-    </script>
+   
   </body>
 </html>
