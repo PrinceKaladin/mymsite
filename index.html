@@ -4,28 +4,36 @@
     <meta charset="utf-8">
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
     <title>Unity WebGL Player | flappy</title>
-    <script src="https://www.gstatic.com/firebasejs/10.14.1/firebase-app.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/10.14.1/firebase-auth.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/10.14.1/firebase-firestore.js"></script>
-<script> const firebaseConfig = {
-  apiKey: "AIzaSyBEuWHhTt7YD-3_vOXlVdu0LzTm4e95rm0",
-  authDomain: "rocketvoy.firebaseapp.com",
-  databaseURL: "https://rocketvoy-default-rtdb.europe-west1.firebasedatabase.app",
-  projectId: "rocketvoy",
-  storageBucket: "rocketvoy.appspot.com",
-  messagingSenderId: "363023542878",
-  appId: "1:363023542878:web:210264407ad5dfe111a2cf",
-  measurementId: "G-SD6ZYT9NQD"
-};
+    <script type="module">
+      import { initializeApp } from 'https://www.gstatic.com/firebasejs/10.14.1/firebase-app.js'
+  
+      // If you enabled Analytics in your project, add the Firebase SDK for Google Analytics
+      import { getAnalytics } from 'https://www.gstatic.com/firebasejs/10.14.1/firebase-analytics.js'
+  
+      // Add Firebase products that you want to use
+      import { getAuth } from 'https://www.gstatic.com/firebasejs/10.14.1/firebase-auth.js'
+      import { getFirestore } from 'https://www.gstatic.com/firebasejs/10.14.1/firebase-firestore.js'
+    </script>
 
-const app = initializeApp(firebaseConfig);
-const database = database();
-</script>
   </head>
   <body style="text-align: center; padding: 0; border: 0; margin: 0;">
     <canvas id="unity-canvas" width=960 height=600 tabindex="-1" style="width: 960px; height: 600px; background: #1F1F20"></canvas>
-    <script src="Build/gs.loader.js"></script>
-
+      <script src="Build/gs.loader.js"></script>
+     <script> 
+  const firebaseConfig = {
+      apiKey: "AIzaSyBEuWHhTt7YD-3_vOXlVdu0LzTm4e95rm0",
+      authDomain: "rocketvoy.firebaseapp.com",
+      databaseURL: "https://rocketvoy-default-rtdb.europe-west1.firebasedatabase.app",
+      projectId: "rocketvoy",
+      storageBucket: "rocketvoy.appspot.com",
+      messagingSenderId: "363023542878",
+      appId: "1:363023542878:web:210264407ad5dfe111a2cf",
+      measurementId: "G-SD6ZYT9NQD"
+    };
+    
+    const app = initializeApp(firebaseConfig);
+    const database = database();
+    </script>
 <script>
   // Инициализация Firebase с вашим конфигом
  
