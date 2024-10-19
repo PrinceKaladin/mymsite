@@ -4,28 +4,72 @@
     <meta charset="utf-8">
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
     <title>Unity WebGL Player | flappy</title>
-          <script>
-      // Функция для загрузки файла data.txt
+    <script>
+      var unityInstance;
+
+      // Функция для чтения текстового файла
       function loadTextFile() {
-        fetch('data.txt') // Путь к файлу data.txt
-          .then(response => response.text()) // Получаем текст
-          .then(data => {
-            console.log("Loaded text: ", data); // Логируем текст в консоль
-            SendMessage('GameManager', 'ReceiveText', data); // Отправляем данные в Unity
-          })
-          .catch(error => console.error('Error loading text file:', error)); // Ловим ошибки
+          var filePath = "username.txt"; // путь к файлу
+          fetch(filePath)
+              .then(response => response.text())  // Чтение содержимого файла как текста
+              .then(data => {
+                  // Отправляем данные в Unity
+                  unityInstance.SendMessage('GameManager', 'ReceiveUsername', data.trim());
+              })
       }
 
-      // Эта функция будет вызвана, когда Unity загрузится
-      function onUnityLoaded() {
-        loadTextFile(); // Загрузить текстовый файл после инициализации Unity
-      }
-    </script>
-  
+      // Инициализация Unity WebGL и запуск загрузки файла
+      window.onload = function() {
+          unityInstance = UnityLoader.instantiate("unityContainer", "Build/gs.loader.json", { onProgress: UnityProgress });
+          loadTextFile();  // Загрузка файла при старте страницы
+      };
+  </script>
   </head>
   <body style="text-align: center; padding: 0; border: 0; margin: 0;">
     <canvas id="unity-canvas" width=960 height=600 tabindex="-1" style="width: 960px; height: 600px; background: #1F1F20"></canvas>
     <script src="Build/gs.loader.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.x/firebase-app.js"></script>
+<script src="https://www.gstatic.com/firebasejs/9.x/firebase-database.js"></script>
+<script>
+  // Инициализация Firebase с вашим конфигом
+  const firebaseConfig = {
+    apiKey: "AIzaSyBEuWHhTt7YD-3_vOXlVdu0LzTm4e95rm0",
+    authDomain: "rocketvoy.firebaseapp.com",
+    databaseURL: "https://rocketvoy-default-rtdb.europe-west1.firebasedatabase.app",
+    projectId: "rocketvoy",
+    storageBucket: "rocketvoy.appspot.com",
+    messagingSenderId: "363023542878",
+    appId: "1:363023542878:web:210264407ad5dfe111a2cf",
+    measurementId: "G-SD6ZYT9NQD"
+  };
+  
+  const app = firebase.initializeApp(firebaseConfig);
+  const database = firebase.database();
+
+  // Запись данных в Firebase
+  function writeDataToFirebase(path, jsonData) {
+    database.ref(path).set(JSON.parse(jsonData))
+      .then(() => {
+        console.log("Data successfully written to Realtime Database");
+      })
+      .catch((error) => {
+        console.error("Error writing data: ", error);
+      });
+  }
+
+  // Чтение данных из Firebase
+  function readDataFromFirebase(path) {
+    firebase.database().ref(path).once('value')
+        .then((snapshot) => {
+            const data = snapshot.val();
+            // Отправляем данные обратно в Unity через вызов функции OnFirebaseDataReceived
+            SendMessage('y', 'OnFirebaseDataReceived', JSON.stringify(data));
+        })
+        .catch((error) => {
+            console.error("Error reading data: ", error);
+        });
+  }
+</script>
     <script>
       if (/iPhone|iPad|iPod|Android/i.test(navigator.userAgent)) {
         // Mobile device style: fill the whole browser client area with the game canvas:
@@ -52,10 +96,7 @@
         productVersion: "1.0",
         // matchWebGLToCanvasSize: false, // Uncomment this to separately control WebGL canvas render size and DOM element size.
         // devicePixelRatio: 1, // Uncomment this to override low DPI rendering on high DPI displays.
-      }).then(function(unityInstance) {
-        unityInstance.Module.onRuntimeInitialized = onUnityLoaded; // Когда Unity загружается, вызываем функцию onUnityLoaded
       });
     </script>
-
   </body>
 </html>
