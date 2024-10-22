@@ -10,19 +10,30 @@
     <script src="Build/gs.loader.js"></script>
     <script>
       if (/iPhone|iPad|iPod|Android/i.test(navigator.userAgent)) {
-        // Mobile device style: fill the whole browser client area with the game canvas:
-        var meta = document.createElement('meta');
-        meta.name = 'viewport';
-        meta.content = 'width=device-width, height=device-height, initial-scale=1.0, user-scalable=no, shrink-to-fit=yes';
-        document.getElementsByTagName('head')[0].appendChild(meta);
+    // Стиль для мобильных устройств
+    var meta = document.createElement('meta');
+    meta.name = 'viewport';
+    meta.content = 'width=device-width, height=device-height, initial-scale=1.0, user-scalable=no, shrink-to-fit=yes';
+    document.getElementsByTagName('head')[0].appendChild(meta);
 
-        var canvas = document.querySelector("#unity-canvas");
-        canvas.style.width = "100%";
-        canvas.style.height = "100%";
-        canvas.style.position = "fixed";
+    var canvas = document.querySelector("#unity-canvas");
+    canvas.style.width = "100%";
+    canvas.style.height = "100%";
+    canvas.style.position = "fixed";
 
-        document.body.style.textAlign = "left";
-      }
+    document.body.style.textAlign = "left";
+} else {
+    // Стиль для ПК
+    var canvas = document.querySelector("#unity-canvas");
+    canvas.style.width = "375px";  // Ширина мобильного вида
+    canvas.style.height = "667px";  // Высота мобильного вида
+    canvas.style.position = "absolute"; // Позиционирование для центра
+    canvas.style.left = "50%"; // Центрирование
+    canvas.style.top = "50%"; // Центрирование
+    canvas.style.transform = "translate(-50%, -50%)"; // Центрирование с помощью трансформации
+
+    document.body.style.textAlign = "center"; // Центрирование текста
+}
 
       createUnityInstance(document.querySelector("#unity-canvas"), {
         dataUrl: "Build/gs.data",
