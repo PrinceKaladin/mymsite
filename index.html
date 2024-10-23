@@ -6,52 +6,39 @@
     <title>Unity WebGL Player | flappy</title>
   </head>
   <body style="text-align: center; padding: 0; border: 0; margin: 0;">
-     <script src="https://www.gstatic.com/firebasejs/7.19.1/firebase-app.js"></script>
-
-  <script src="https://www.gstatic.com/firebasejs/7.19.1/firebase-database.js"></script>
-  <script src="https://www.gstatic.com/firebasejs/7.19.1/firebase-auth.js"></script>
-  <script src="https://www.gstatic.com/firebasejs/7.19.1/firebase-functions.js"></script>
-  <script src="https://www.gstatic.com/firebasejs/7.19.1/firebase-storage.js"></script>
-  <script src="https://www.gstatic.com/firebasejs/7.19.1/firebase-firestore.js"></script>
-
-  <script>
-    // Your web app's Firebase configuration
-      const firebaseConfig = {
-        apiKey: "AIzaSyBEuWHhTt7YD-3_vOXlVdu0LzTm4e95rm0",
-        authDomain: "rocketvoy.firebaseapp.com",
-        databaseURL: "https://rocketvoy-default-rtdb.europe-west1.firebasedatabase.app",
-        projectId: "rocketvoy",
-        storageBucket: "rocketvoy.appspot.com",
-        messagingSenderId: "363023542878",
-        appId: "1:363023542878:web:210264407ad5dfe111a2cf",
-        measurementId: "G-SD6ZYT9NQD"
-      };
-    // Initialize Firebase
-    firebase.initializeApp(firebaseConfig);
-  </script>
-
-    <canvas id="unity-canvas" width=960 height=600 tabindex="-1" style="width: 960px; height: 600px; background: #231F20"></canvas>
+    <canvas id="unity-canvas" width=960 height=600 tabindex="-1" style="width: 960px; height: 600px; background: #1F1F20"></canvas>
     <script src="Build/gs.loader.js"></script>
     <script>
       if (/iPhone|iPad|iPod|Android/i.test(navigator.userAgent)) {
-        // Mobile device style: fill the whole browser client area with the game canvas:
-        var meta = document.createElement('meta');
-        meta.name = 'viewport';
-        meta.content = 'width=device-width, height=device-height, initial-scale=1.0, user-scalable=no, shrink-to-fit=yes';
-        document.getElementsByTagName('head')[0].appendChild(meta);
+    // Стиль для мобильных устройств
+    var meta = document.createElement('meta');
+    meta.name = 'viewport';
+    meta.content = 'width=device-width, height=device-height, initial-scale=1.0, user-scalable=no, shrink-to-fit=yes';
+    document.getElementsByTagName('head')[0].appendChild(meta);
 
-        var canvas = document.querySelector("#unity-canvas");
-        canvas.style.width = "100%";
-        canvas.style.height = "100%";
-        canvas.style.position = "fixed";
+    var canvas = document.querySelector("#unity-canvas");
+    canvas.style.width = "100%";
+    canvas.style.height = "100%";
+    canvas.style.position = "fixed";
 
-        document.body.style.textAlign = "left";
-      }
+    document.body.style.textAlign = "left";
+} else {
+    // Стиль для ПК
+    var canvas = document.querySelector("#unity-canvas");
+    canvas.style.width = "375px";  // Ширина мобильного вида
+    canvas.style.height = "667px";  // Высота мобильного вида
+    canvas.style.position = "absolute"; // Позиционирование для центра
+    canvas.style.left = "50%"; // Центрирование
+    canvas.style.top = "50%"; // Центрирование
+    canvas.style.transform = "translate(-50%, -50%)"; // Центрирование с помощью трансформации
+
+    document.body.style.textAlign = "center"; // Центрирование текста
+}
 
       createUnityInstance(document.querySelector("#unity-canvas"), {
-        dataUrl: "Build/gs.data.unityweb",
-        frameworkUrl: "Build/gs.framework.js.unityweb",
-        codeUrl: "Build/gs.wasm.unityweb",
+        dataUrl: "Build/gs.data",
+        frameworkUrl: "Build/gs.framework.js",
+        codeUrl: "Build/gs.wasm",
         streamingAssetsUrl: "StreamingAssets",
         companyName: "DefaultCompany",
         productName: "flappy",
