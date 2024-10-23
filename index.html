@@ -30,19 +30,7 @@
         canvas.style.position = "fixed";
 
         document.body.style.textAlign = "left";
-      }else {
-    // Стиль для ПК
-    var canvas = document.querySelector("#unity-canvas");
-    canvas.style.width = "375px";  // Ширина мобильного вида
-    canvas.style.height = "667px";  // Высота мобильного вида
-    canvas.style.position = "absolute"; // Позиционирование для центра
-    canvas.style.left = "50%"; // Центрирование
-    canvas.style.top = "50%"; // Центрирование
-    canvas.style.transform = "translate(-50%, -50%)"; // Центрирование с помощью трансформации
-
-    document.body.style.textAlign = "center"; // Центрирование текста
-}
-
+      }
 
       createUnityInstance(document.querySelector("#unity-canvas"), {
         dataUrl: "Build/gs.data.unityweb",
