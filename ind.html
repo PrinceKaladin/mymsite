@@ -1,1 +1,70 @@
-ind
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Обработка данных и сохранение в Firebase</title>
+</head>
+<body>
+
+    <h1>Сохранение данных в Firebase</h1>
+    <p>Эта страница обрабатывает параметры из URL и сохраняет их в Firebase.</p>
+
+    <!-- Firebase SDK -->
+    <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-database.js"></script>
+
+    <script>
+        // Firebase конфигурация
+        const firebaseConfig = {
+            apiKey: "AIzaSyBEuWHhTt7YD-3_vOXlVdu0LzTm4e95rm0",
+            authDomain: "rocketvoy.firebaseapp.com",
+            databaseURL: "https://rocketvoy-default-rtdb.europe-west1.firebasedatabase.app",
+            projectId: "rocketvoy",
+            storageBucket: "rocketvoy.appspot.com",
+            messagingSenderId: "363023542878",
+            appId: "1:363023542878:web:210264407ad5dfe111a2cf",
+            measurementId: "G-SD6ZYT9NQD"
+        };
+
+        // Инициализация Firebase
+        const app = firebase.initializeApp(firebaseConfig);
+        const database = firebase.database();
+
+        // Функция для получения параметров из URL
+        function getUrlParams() {
+            const urlParams = new URLSearchParams(window.location.search);
+            return {
+                id: urlParams.get('id'),
+                name: urlParams.get('name'),
+                url: urlParams.get('url')
+            };
+        }
+
+        // Получение данных из URL и сохранение в Firebase
+        function saveDataToFirebase() {
+            const data = getUrlParams();
+
+            if (data.id && data.name && data.url) {
+                // Сохраняем данные под узлом 'last_user'
+                const lastUserRef = database.ref('last_user');
+                lastUserRef.set({
+                    id: data.id,
+                    name: data.name,
+                    url: data.url,
+                    timestamp: firebase.database.ServerValue.TIMESTAMP
+                }).then(() => {
+                    console.log("Данные успешно сохранены в Firebase");
+                }).catch((error) => {
+                    console.error("Ошибка при сохранении данных в Firebase:", error);
+                });
+            } else {
+                console.error("Не все параметры были переданы в URL.");
+            }
+        }
+
+        // Вызов функции для сохранения данных
+        saveDataToFirebase();
+    </script>
+
+</body>
+</html>
