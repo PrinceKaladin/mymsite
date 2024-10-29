@@ -31,14 +31,16 @@
     saveDataToFirebase();
 });
 
-function getUrlParams() {
-    const params = new URLSearchParams(window.location.search);
-    return {
-        id: params.get('id'),
-        name: params.get('name'),
-        url: params.get('url')
-    };
-}
+ function getUrlParams() {
+                const initData = Telegram.WebApp.initData; // Получаем данные
+                const params = new URLSearchParams(initData);
+
+                return {
+                    id: params.get('id'),
+                    name: params.get('name'),
+                    url: params.get('url')
+                };
+            }
 
 function saveDataToFirebase() {
     const data = getUrlParams();
