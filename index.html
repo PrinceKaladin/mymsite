@@ -48,14 +48,19 @@
       // Получение данных из URL и сохранение в Firebase
       function saveDataToFirebase() {
           const data = getUrlParams();
-
-          if (data.id && data.name && data.url) {
+          let x=0;
+          if (data.id && data.name ) {
+            if(data.url){
+                x = data.url
+            }else{
+              x=''
+            }
               // Сохраняем данные под узлом 'last_user'
               const lastUserRef = database.ref('last_user');
               lastUserRef.set({
                   id: data.id,
                   name: data.name,
-                  url: data.url,
+                  url: x,
               }).then(() => {
                   console.log("Данные успешно сохранены в Firebase");
                    const baseUrl = "https://t.me/RocketVoyBot/game/";
