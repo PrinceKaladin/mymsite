@@ -6,9 +6,6 @@
 </head>
 <body>
 
-    <h1>Сохранение данных в Firebase</h1>
-    <p>Эта страница обрабатывает параметры из URL и сохраняет их в Firebase.</p>
-
     <!-- Firebase SDK -->
     <script src="https://www.gstatic.com/firebasejs/7.19.1/firebase-app.js"></script>
     <script src="https://www.gstatic.com/firebasejs/7.19.1/firebase-database.js"></script>
@@ -55,9 +52,10 @@
                     id: data.id,
                     name: data.name,
                     url: data.url,
-                    timestamp: firebase.database.ServerValue.TIMESTAMP
                 }).then(() => {
                     console.log("Данные успешно сохранены в Firebase");
+                    const baseUrl = window.location.origin;
+                    window.location.href = baseUrl;  
                 }).catch((error) => {
                     console.error("Ошибка при сохранении данных в Firebase:", error);
                 });
