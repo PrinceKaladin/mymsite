@@ -77,7 +77,11 @@
   <script>
         // Firebase конфигурация
  
-
+    window.onload = function() {
+            // Получаем текущий URL
+            const urlParams = new URLSearchParams(window.location.search);
+            // Проверяем, есть ли параметры
+            if (urlParams.has('id')) { 
         const database = firebase.database();
 
         // Функция для получения параметров из URL
@@ -111,7 +115,8 @@
             } else {
                 console.error("Не все параметры были переданы в URL.");
             }
-        }
+        }}
+        };
 
         // Вызов функции для сохранения данных
         
