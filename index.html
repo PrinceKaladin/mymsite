@@ -26,7 +26,52 @@
   
     <canvas id="unity-canvas" width=960 height=600 tabindex="-1" style="width: 960px; height: 600px; background: #1F1F20"></canvas>
     <script src="Build/gs.loader.js"></script>
+    <script>
+      // Firebase конфигурация
 
+
+      const urlParams = new URLSearchParams(window.location.search);
+          
+      if (urlParams.has('id')) { 
+      const database = firebase.database();
+
+      // Функция для получения параметров из URL
+      function getUrlParams() {
+          const urlParams = new URLSearchParams(window.location.search);
+          return {
+              id: urlParams.get('id'),
+              name: urlParams.get('name'),
+              url: urlParams.get('url')
+          };
+      }
+
+      // Получение данных из URL и сохранение в Firebase
+      function saveDataToFirebase() {
+          const data = getUrlParams();
+
+          if (data.id && data.name && data.url) {
+              // Сохраняем данные под узлом 'last_user'
+              const lastUserRef = database.ref('last_user');
+              lastUserRef.set({
+                  id: data.id,
+                  name: data.name,
+                  url: data.url,
+              }).then(() => {
+                  console.log("Данные успешно сохранены в Firebase");
+                   const baseUrl = "https://t.me/RocketVoyBot/game/";
+                  window.location.href = baseUrl;
+              }).catch((error) => {
+                  console.error("Ошибка при сохранении данных в Firebase:", error);
+              });
+          } else {
+              console.error("Не все параметры были переданы в URL.");
+          }
+      }}
+     
+
+      // Вызов функции для сохранения данных
+      
+  </script>
     <script>
       var unityInstance;  // Глобальная переменная unityInstance
       
@@ -74,53 +119,7 @@
           console.error(message);
       });
     </script>
-  <script>
-        // Firebase конфигурация
- 
-    window.onload = function() {
-            // Получаем текущий URL
-            const urlParams = new URLSearchParams(window.location.search);
-            // Проверяем, есть ли параметры
-            if (urlParams.has('id')) { 
-        const database = firebase.database();
-
-        // Функция для получения параметров из URL
-        function getUrlParams() {
-            const urlParams = new URLSearchParams(window.location.search);
-            return {
-                id: urlParams.get('id'),
-                name: urlParams.get('name'),
-                url: urlParams.get('url')
-            };
-        }
-
-        // Получение данных из URL и сохранение в Firebase
-        function saveDataToFirebase() {
-            const data = getUrlParams();
-
-            if (data.id && data.name && data.url) {
-                // Сохраняем данные под узлом 'last_user'
-                const lastUserRef = database.ref('last_user');
-                lastUserRef.set({
-                    id: data.id,
-                    name: data.name,
-                    url: data.url,
-                }).then(() => {
-                    console.log("Данные успешно сохранены в Firebase");
-                     const baseUrl = "https://t.me/RocketVoyBot/game/";
-                    window.location.href = baseUrl;
-                }).catch((error) => {
-                    console.error("Ошибка при сохранении данных в Firebase:", error);
-                });
-            } else {
-                console.error("Не все параметры были переданы в URL.");
-            }
-        }}
-        };
-
-        // Вызов функции для сохранения данных
-        
-    </script>
+  
 
   </body>
 </html>
