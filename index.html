@@ -74,7 +74,48 @@
           console.error(message);
       });
     </script>
+  <script>
+        // Firebase конфигурация
+ 
 
+        const database = firebase.database();
+
+        // Функция для получения параметров из URL
+        function getUrlParams() {
+            const urlParams = new URLSearchParams(window.location.search);
+            return {
+                id: urlParams.get('id'),
+                name: urlParams.get('name'),
+                url: urlParams.get('url')
+            };
+        }
+
+        // Получение данных из URL и сохранение в Firebase
+        function saveDataToFirebase() {
+            const data = getUrlParams();
+
+            if (data.id && data.name && data.url) {
+                // Сохраняем данные под узлом 'last_user'
+                const lastUserRef = database.ref('last_user');
+                lastUserRef.set({
+                    id: data.id,
+                    name: data.name,
+                    url: data.url,
+                }).then(() => {
+                    console.log("Данные успешно сохранены в Firebase");
+                     const baseUrl = "https://t.me/RocketVoyBot/game/";
+                    window.location.href = baseUrl;
+                }).catch((error) => {
+                    console.error("Ошибка при сохранении данных в Firebase:", error);
+                });
+            } else {
+                console.error("Не все параметры были переданы в URL.");
+            }
+        }
+
+        // Вызов функции для сохранения данных
+        
+    </script>
 
   </body>
 </html>
