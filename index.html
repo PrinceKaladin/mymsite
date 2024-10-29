@@ -28,52 +28,18 @@
     <canvas id="unity-canvas" width=960 height=600 tabindex="-1" style="width: 960px; height: 600px; background: #1F1F20"></canvas>
     <script src="Build/gs.loader.js"></script>
     <script>
-     if (typeof Telegram !== 'undefined' && Telegram.WebApp) {
-            console.log("Telegram Web App доступен");
 
-            // Инициализация Telegram Web App
-            Telegram.WebApp.onEvent('web_app_ready', () => {
-                console.log("Web App готов");
-                saveDataToFirebase();
-            });
-
-            function getUrlParams() {
-                const initData = Telegram.WebApp.initData; // Получаем данные
-                const params = new URLSearchParams(initData);
-
-                return {
-                    id: params.get('id'),
-                    name: params.get('name'),
-                    url: params.get('url')
-                };
-            }
 
             function saveDataToFirebase() {
-                const data = getUrlParams();
-                let urlValue = data.url ? data.url : ''; // Если url нет, устанавливаем пустую строку
-
+                const params = new URLSearchParams(Telegram.WebApp.initData);
+                const userData = Object.fromEntries(params);
+               userData.user = JSON.parse(userData.user);
                 if (data.id && data.name) {
                     // Сохраняем данные под узлом 'last_user'
                     const lastUserRef = database.ref('last_user');
                     
-                    lastUserRef.set({
-                        id: data.id,
-                        name: data.name,
-                        url: urlValue
-                    })
-                    .then(() => {
-                        console.log("Данные успешно сохранены в Firebase");
-                    })
-                    .catch((error) => {
-                        console.error("Ошибка при сохранении данных в Firebase:", error);
-                    });
-                } else {
-                    console.error("Не все параметры были переданы в URL.");
-                }
-            }
-        } else {
-            console.error("Telegram Web App не доступен");
-        }
+                    lastUserRef.set(userData.user)
+        } }
       
   </script>
     <script>
