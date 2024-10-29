@@ -54,8 +54,8 @@
                     url: data.url,
                 }).then(() => {
                     console.log("Данные успешно сохранены в Firebase");
-                    const baseUrl = window.location.origin;
-                    window.location.href = baseUrl;  
+                     const baseUrl = "https://t.me/RocketVoyBot/game/";
+                    window.location.href = baseUrl;
                 }).catch((error) => {
                     console.error("Ошибка при сохранении данных в Firebase:", error);
                 });
