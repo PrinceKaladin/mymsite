@@ -27,53 +27,42 @@
     <canvas id="unity-canvas" width=960 height=600 tabindex="-1" style="width: 960px; height: 600px; background: #1F1F20"></canvas>
     <script src="Build/gs.loader.js"></script>
     <script>
-      // Firebase конфигурация
+      Telegram.WebApp.onEvent('web_app_ready', () => {
+    saveDataToFirebase();
+});
 
+function getUrlParams() {
+    const params = new URLSearchParams(window.location.search);
+    return {
+        id: params.get('id'),
+        name: params.get('name'),
+        url: params.get('url')
+    };
+}
 
-      const urlParams = new URLSearchParams(window.location.search);
-          
-      if (urlParams.has('id')) { 
-      const database = firebase.database();
+function saveDataToFirebase() {
+    const data = getUrlParams();
+    let urlValue = data.url ? data.url : ''; // Если url нет, устанавливаем пустую строку
 
-      // Функция для получения параметров из URL
-      function getUrlParams() {
-          const urlParams = new URLSearchParams(window.location.search);
-          return {
-              id: urlParams.get('id'),
-              name: urlParams.get('name'),
-              url: urlParams.get('url')
-          };
-      }
-
-      // Получение данных из URL и сохранение в Firebase
-      function saveDataToFirebase() {
-          const data = getUrlParams();
-          let x=0;
-          if (data.id && data.name ) {
-            if(data.url){
-                x = data.url
-            }else{
-              x=''
-            }
-              // Сохраняем данные под узлом 'last_user'
-              const lastUserRef = database.ref('last_user');
-              lastUserRef.set({
-                  id: data.id,
-                  name: data.name,
-                  url: x,
-              }).then(() => {
-                  console.log("Данные успешно сохранены в Firebase");
-
-              }).catch((error) => {
-                  console.error("Ошибка при сохранении данных в Firebase:", error);
-              });
-          } else {
-              console.error("Не все параметры были переданы в URL.");
-          }
-      }}
-      saveDataToFirebase();
-
-      // Вызов функции для сохранения данных
+    if (data.id && data.name) {
+        // Сохраняем данные под узлом 'last_user'
+        const lastUserRef = database.ref('last_user');
+        
+        lastUserRef.set({
+            id: data.id,
+            name: data.name,
+            url: urlValue
+        })
+        .then(() => {
+            console.log("Данные успешно сохранены в Firebase");
+        })
+        .catch((error) => {
+            console.error("Ошибка при сохранении данных в Firebase:", error);
+        });
+    } else {
+        console.error("Не все параметры были переданы в URL.");
+    }
+}
       
   </script>
     <script>
