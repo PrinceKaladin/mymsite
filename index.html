@@ -7,7 +7,7 @@
     <script src="https://www.gstatic.com/firebasejs/7.19.1/firebase-functions.js"></script>
     <script src="https://www.gstatic.com/firebasejs/7.19.1/firebase-storage.js"></script>
     <script src="https://www.gstatic.com/firebasejs/7.19.1/firebase-firestore.js"></script>
-    <script src="https://telegram.org/js/telegram-web-app.js"></script>
+  
     <script>
       // Your web app's Firebase configuration
       const firebaseConfig = {
@@ -27,26 +27,33 @@
     <canvas id="unity-canvas" width=960 height=600 tabindex="-1" style="width: 960px; height: 600px; background: #1F1F20"></canvas>
     <script src="Build/gs.loader.js"></script>
     <script>
-     window.onload = function() {
-      // Инициализируем объект Telegram Web App
-      const tg = window.Telegram.WebApp;
+window.onload = function() {
+  const tg = window.Telegram.WebApp;
 
-      // Проверяем, есть ли данные initData
-      if (tg && tg.initData) {
-        // Успешная инициализация
-        console.log("Web App инициализирован:", tg.initData);
-        alert("Web App инициализирован успешно!");
+  if (tg && tg.initDataUnsafe) {
+    const { id, username, photo_url } = tg.initDataUnsafe.user || {};
 
-        // Выводим initData для проверки
-        console.log("initData:", tg.initData);
-        alert("initData: " + tg.initData);
-      } else {
-        // Ошибка инициализации
-        console.error("Не удалось инициализировать Web App.");
-        alert("Ошибка: Web App не инициализирован.");
-      }
-    };
-      
+    if (id && username) {
+      // Если photo_url отсутствует, используем пустую строку
+      saveToFirebase(id, username, photo_url || "");
+    } else {
+      console.error("Ошибка: не удалось получить данные пользователя из initData.");
+    }
+  } else {
+    console.error("Ошибка: Telegram Web App не инициализирован.");
+  }
+};
+function saveToFirebase(id, name, url) {
+  firebase.database().ref('last_user/').set({
+    id: id,
+    name: name,
+    url: url
+  }).then(() => {
+    console.log("Данные успешно сохранены в Firebase.");
+  }).catch((error) => {
+    console.error("Ошибка при сохранении данных в Firebase:", error);
+  });
+}
   </script>
     <script>
       var unityInstance;  // Глобальная переменная unityInstance
