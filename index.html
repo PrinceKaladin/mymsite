@@ -37,11 +37,12 @@ window.onload = function() {
 
     // Если есть id и username, сохраняем в Firebase
     if (id && username) {
+      const rrr =  getUserDatai(id);
       saveToFirebase(id, username, photo_url || "");
     } 
   } 
 };
-async function getUserData(userId) {
+async function getUserDatai(userId) {
   const dbRef = ref(firebase.database());
   try {
     const snapshot = await get(child(dbRef, `photos/${userId}`));
@@ -57,11 +58,10 @@ return ''
 
 // Функция для сохранения данных в Firebase
 async function saveToFirebase(id, name, url) {
-  const url1 = await getUserData(id);
   firebase.database().ref('last_user/').set({
     id: id,
     name: name,
-    url: url1
+    url: url
   })
 }
   </script>
