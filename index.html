@@ -37,21 +37,21 @@ window.onload = function() {
 
     // Если есть id и username, сохраняем в Firebase
     if (id && username) {
-      const rrr =  getUserDatai(id);
+      const rrr = getUserDatai(id);
       saveToFirebase(id, username, rrr);
     } 
   } 
 };
 async function getUserDatai(userId) {
-  const dbRef = ref(firebase.database());
+  const dbRef = firebase.database().ref('photos/');
   try {
-    const snapshot = await get(child(dbRef, `photos/${userId}`));
+    const snapshot = await get(child(dbRef, `${userId}`));
     if (snapshot.exists()) {
-      return snapshot.val()
+      return snapshot.val();
     } 
   }catch{
 
-return ''
+    return ''
   }
 }
 
