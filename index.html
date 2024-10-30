@@ -29,7 +29,7 @@ window.onload = async function() {
  
   if (tg && tg.initDataUnsafe) {
     // Показываем initDataUnsafe через alert для отладки
-
+    alert(tg.initDataUnsafe)
 
     // Извлекаем id, username и photo_url из initDataUnsafe
     const { id, username, photo_url } = tg.initDataUnsafe.user || {};
