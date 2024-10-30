@@ -24,7 +24,7 @@
       firebase.initializeApp(firebaseConfig);
     </script>
    <script>
-window.onload = function() {
+window.onload = async function() {
   const tg = window.Telegram.WebApp;
  
   if (tg && tg.initDataUnsafe) {
@@ -37,21 +37,23 @@ window.onload = function() {
 
     // Если есть id и username, сохраняем в Firebase
     if (id && username) {
-      const rrr = getUserDatai(id);
-      saveToFirebase(id, username, rrr);
+      const rrr = await getUserDatai(id);
+      await saveToFirebase(id, username, rrr);
     } 
   } 
 };
-async function getUserDatai(userId) {
+async function getUserData(userId) {
   const dbRef = firebase.database().ref('photos/');
   try {
-    const snapshot = await get(child(dbRef, `${userId}`));
+    const snapshot = await dbRef.child(userId).get();
     if (snapshot.exists()) {
       return snapshot.val();
-    } 
-  }catch{
-
-    return ''
+    } else {
+      return null; // Возвращаем null, если данных нет
+    }
+  } catch (error) {
+    console.error("Ошибка при получении данных:", error);
+    return null; // Возвращаем null в случае ошибки
   }
 }
 
