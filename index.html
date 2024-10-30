@@ -1,4 +1,3 @@
-
 <title>Unity WebGL Player | flappy</title>
   </head>
   <body style="text-align: center; padding: 0; border: 0; margin: 0;">
@@ -43,7 +42,7 @@ window.onload = function() {
   } 
 };
 async function getUserData(userId) {
-  const dbRef = ref(database);
+  const dbRef = ref(firebase.database());
   try {
     const snapshot = await get(child(dbRef, `photos/${userId}`));
     if (snapshot.exists()) {
