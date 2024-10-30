@@ -22,26 +22,12 @@
       };
       // Initialize Firebase
       firebase.initializeApp(firebaseConfig);
-    const database = firebase.database();
+
     </script>
   
     <canvas id="unity-canvas" width=960 height=600 tabindex="-1" style="width: 960px; height: 600px; background: #1F1F20"></canvas>
     <script src="Build/gs.loader.js"></script>
-    <script>
 
-
-            function saveDataToFirebase() {
-                const params = new URLSearchParams(Telegram.WebApp.initData);
-                const userData = Object.fromEntries(params);
-               userData.user = JSON.parse(userData.user);
-                if (data.id && data.name) {
-                    // Сохраняем данные под узлом 'last_user'
-                    const lastUserRef = database.ref('last_user');
-                    
-                    lastUserRef.set(userData.user)
-        } }
-      saveDataToFirebase();
-  </script>
     <script>
       var unityInstance;  // Глобальная переменная unityInstance
       
