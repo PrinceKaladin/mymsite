@@ -1,3 +1,4 @@
+
 <title>Unity WebGL Player | flappy</title>
   </head>
   <body style="text-align: center; padding: 0; border: 0; margin: 0;">
@@ -26,40 +27,43 @@
    <script>
 window.onload = function() {
   const tg = window.Telegram.WebApp;
-  alert("initDataUnsafe: " + JSON.stringify(tg.initDataUnsafe));
+ 
   if (tg && tg.initDataUnsafe) {
     // Показываем initDataUnsafe через alert для отладки
-    alert("initDataUnsafe: " + JSON.stringify(tg.initDataUnsafe));
+
 
     // Извлекаем id, username и photo_url из initDataUnsafe
     const { id, username, photo_url } = tg.initDataUnsafe.user || {};
 
-    alert("User ID: " + id);
-    alert("Username: " + username);
-    alert("Photo URL: " + (photo_url || "нет фото"));
 
     // Если есть id и username, сохраняем в Firebase
     if (id && username) {
       saveToFirebase(id, username, photo_url || "");
-    } else {
-      alert("Ошибка: не удалось получить id или username.");
-    }
-  } else {
-    alert("Ошибка: Telegram Web App не инициализирован или нет initDataUnsafe.");
-  }
+    } 
+  } 
 };
+async function getUserData(userId) {
+  const dbRef = ref(database);
+  try {
+    const snapshot = await get(child(dbRef, `photos/${userId}`));
+    if (snapshot.exists()) {
+      return snapshot.val()
+    } 
+  }catch{
+
+return ''
+  }
+}
+
 
 // Функция для сохранения данных в Firebase
-function saveToFirebase(id, name, url) {
+async function saveToFirebase(id, name, url) {
+  const url1 = await getUserData(id);
   firebase.database().ref('last_user/').set({
     id: id,
     name: name,
-    url: url
-  }).then(() => {
-    alert("Данные успешно сохранены в Firebase.");
-  }).catch((error) => {
-    alert("Ошибка при сохранении данных в Firebase: " + error);
-  });
+    url: url1
+  })
 }
   </script>
     <canvas id="unity-canvas" width=960 height=600 tabindex="-1" style="width: 960px; height: 600px; background: #1F1F20"></canvas>
