@@ -23,13 +23,10 @@
       // Initialize Firebase
       firebase.initializeApp(firebaseConfig);
     </script>
-  
-    <canvas id="unity-canvas" width=960 height=600 tabindex="-1" style="width: 960px; height: 600px; background: #1F1F20"></canvas>
-    <script src="Build/gs.loader.js"></script>
-    <script>
+   <script>
 window.onload = function() {
   const tg = window.Telegram.WebApp;
-
+  alert("initDataUnsafe: " + JSON.stringify(tg.initDataUnsafe));
   if (tg && tg.initDataUnsafe) {
     // Показываем initDataUnsafe через alert для отладки
     alert("initDataUnsafe: " + JSON.stringify(tg.initDataUnsafe));
@@ -65,6 +62,9 @@ function saveToFirebase(id, name, url) {
   });
 }
   </script>
+    <canvas id="unity-canvas" width=960 height=600 tabindex="-1" style="width: 960px; height: 600px; background: #1F1F20"></canvas>
+    <script src="Build/gs.loader.js"></script>
+   
     <script>
       var unityInstance;  // Глобальная переменная unityInstance
       
