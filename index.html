@@ -27,22 +27,26 @@
     <canvas id="unity-canvas" width=960 height=600 tabindex="-1" style="width: 960px; height: 600px; background: #1F1F20"></canvas>
     <script src="Build/gs.loader.js"></script>
     <script>
-
+window.onload = function() {
   const tg = window.Telegram.WebApp;
 
   if (tg && tg.initDataUnsafe) {
+    // Выводим данные initDataUnsafe в alert для проверки
+    alert("initDataUnsafe: " + JSON.stringify(tg.initDataUnsafe));
+
+    // Извлекаем id, username и photo_url из initDataUnsafe
     const { id, username, photo_url } = tg.initDataUnsafe.user || {};
 
+    // Если есть id и username, сохраняем в Firebase
     if (id && username) {
-      // Если photo_url отсутствует, используем пустую строку
       saveToFirebase(id, username, photo_url || "");
     } else {
-      console.error("Ошибка: не удалось получить данные пользователя из initData.");
+      console.error("Ошибка: нет id или username.");
     }
   } else {
-    console.error("Ошибка: Telegram Web App не инициализирован.");
+    console.error("Ошибка: Telegram Web App не инициализирован или нет initDataUnsafe.");
   }
-
+};
 
 // Функция для сохранения данных в Firebase
 function saveToFirebase(id, name, url) {
@@ -56,6 +60,7 @@ function saveToFirebase(id, name, url) {
     console.error("Ошибка при сохранении данных в Firebase:", error);
   });
 }
+
   </script>
     <script>
       var unityInstance;  // Глобальная переменная unityInstance
