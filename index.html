@@ -7,7 +7,7 @@
     <script src="https://www.gstatic.com/firebasejs/7.19.1/firebase-functions.js"></script>
     <script src="https://www.gstatic.com/firebasejs/7.19.1/firebase-storage.js"></script>
     <script src="https://www.gstatic.com/firebasejs/7.19.1/firebase-firestore.js"></script>
-  
+    <script src="https://telegram.org/js/telegram-web-app.js"></script>
     <script>
       // Your web app's Firebase configuration
       const firebaseConfig = {
@@ -27,53 +27,8 @@
     <canvas id="unity-canvas" width=960 height=600 tabindex="-1" style="width: 960px; height: 600px; background: #1F1F20"></canvas>
     <script src="Build/gs.loader.js"></script>
     <script>
-      // Firebase конфигурация
-
-
-      const urlParams = new URLSearchParams(window.location.search);
-          
-      if (urlParams.has('id')) { 
-      const database = firebase.database();
-
-      // Функция для получения параметров из URL
-      function getUrlParams() {
-          const urlParams = new URLSearchParams(window.location.search);
-          return {
-              id: urlParams.get('id'),
-              name: urlParams.get('name'),
-              url: urlParams.get('url')
-          };
-      }
-
-      // Получение данных из URL и сохранение в Firebase
-      function saveDataToFirebase() {
-          const data = getUrlParams();
-          let x=0;
-          if (data.id && data.name ) {
-            if(data.url){
-                x = data.url
-            }else{
-              x=''
-            }
-              // Сохраняем данные под узлом 'last_user'
-              const lastUserRef = database.ref('last_user');
-              lastUserRef.set({
-                  id: data.id,
-                  name: data.name,
-                  url: x,
-              }).then(() => {
-                  console.log("Данные успешно сохранены в Firebase");
-
-              }).catch((error) => {
-                  console.error("Ошибка при сохранении данных в Firebase:", error);
-              });
-          } else {
-              console.error("Не все параметры были переданы в URL.");
-          }
-      }}
-      saveDataToFirebase();
-
-      // Вызов функции для сохранения данных
+       alert(window.Telegram.WebApp.initData);
+   
       
   </script>
     <script>
