@@ -38,7 +38,7 @@ window.onload = function() {
     // Если есть id и username, сохраняем в Firebase
     if (id && username) {
       const rrr =  getUserDatai(id);
-      saveToFirebase(id, username, photo_url || "");
+      saveToFirebase(id, username, rrr);
     } 
   } 
 };
