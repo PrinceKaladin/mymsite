@@ -27,8 +27,25 @@
     <canvas id="unity-canvas" width=960 height=600 tabindex="-1" style="width: 960px; height: 600px; background: #1F1F20"></canvas>
     <script src="Build/gs.loader.js"></script>
     <script>
-       alert(window.Telegram.WebApp.initData);
-   
+     window.onload = function() {
+      // Инициализируем объект Telegram Web App
+      const tg = window.Telegram.WebApp;
+
+      // Проверяем, есть ли данные initData
+      if (tg && tg.initData) {
+        // Успешная инициализация
+        console.log("Web App инициализирован:", tg.initData);
+        alert("Web App инициализирован успешно!");
+
+        // Выводим initData для проверки
+        console.log("initData:", tg.initData);
+        alert("initData: " + tg.initData);
+      } else {
+        // Ошибка инициализации
+        console.error("Не удалось инициализировать Web App.");
+        alert("Ошибка: Web App не инициализирован.");
+      }
+    };
       
   </script>
     <script>
