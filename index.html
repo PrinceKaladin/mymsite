@@ -44,17 +44,14 @@ window.onload = async function() {
 };
 async function getUserData(userId) {
   const dbRef = firebase.database().ref('photos/');
-  try {
-    const snapshot = await dbRef.child(userId).get();
-    if (snapshot.exists()) {
-      return snapshot.val();
-    } else {
-      return " "; // Возвращаем null, если данных нет
-    }
-  } catch (error) {
-    console.error("Ошибка при получении данных:", error);
-    return " "; // Возвращаем null в случае ошибки
-  }
+try{
+ const snapshot = await dbRef.child("719578554").once("value");
+return snapshot.val();
+}
+catch{
+return " "
+
+}
 }
 
 
