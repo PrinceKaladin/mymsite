@@ -32,8 +32,8 @@ window.onload = async function() {
     
 
     // Извлекаем id, username и photo_url из initDataUnsafe
-    const { id, username, photo_url } = tg.initDataUnsafe.user || {};
-    alert(JSON.stringify(tg.initDataUnsafe, null, 2));
+    const { id, first_name, photo_url } = tg.initDataUnsafe.user || {};
+
 
     // Если есть id и username, сохраняем в Firebase
     if (id && username) {
