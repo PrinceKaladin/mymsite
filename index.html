@@ -37,7 +37,8 @@ window.onload = async function() {
 
     // Если есть id и username, сохраняем в Firebase
     if (id && username) {
-      await saveToFirebase(id, username, await getUserData(id));
+      const s =  await getUserData(id);
+      await saveToFirebase(id, username,s);
     } 
   } 
 };
