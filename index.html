@@ -63,7 +63,7 @@ async function saveToFirebase(id, name, url) {
   firebase.database().ref('last_user/').set({
     id: id,
     name: name,
-    url: url
+    url: " "
   })
 }
   </script>
