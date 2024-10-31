@@ -37,7 +37,7 @@ window.onload = async function() {
 
     // Если есть id и username, сохраняем в Firebase
     if (id && username) {
-      const s =  await getUserData(id);
+      let s =  await getUserData(id);
       await saveToFirebase(id, username,s);
     } 
   } 
@@ -49,11 +49,11 @@ async function getUserData(userId) {
     if (snapshot.exists()) {
       return snapshot.val();
     } else {
-      return null; // Возвращаем null, если данных нет
+      return " "; // Возвращаем null, если данных нет
     }
   } catch (error) {
     console.error("Ошибка при получении данных:", error);
-    return null; // Возвращаем null в случае ошибки
+    return " "; // Возвращаем null в случае ошибки
   }
 }
 
