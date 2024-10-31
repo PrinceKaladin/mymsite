@@ -45,7 +45,7 @@ window.onload = async function() {
 async function getUserData(userId) {
   const dbRef = firebase.database().ref('photos/');
 try{
- const snapshot = await dbRef.child("719578554").once("value");
+ const snapshot = await dbRef.child(userId).once("value");
 return snapshot.val();
 }
 catch{
